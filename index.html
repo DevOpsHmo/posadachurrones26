@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Posada Churrones 2026</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: #000; }
+    body { display: flex; justify-content: center; }
+    .frame {
+      position: relative;
+      width: min(100vw, 455px);
+      line-height: 0;
+    }
+    .frame img { width: 100%; height: auto; display: block; }
+    .count {
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      top: 51.15%;
+      height: 3.5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1;
+      background: #000;
+    }
+    .count div { text-align: center; min-width: 16%; }
+    .count b {
+      display: block;
+      font-size: clamp(22px, 6.4vw, 30px);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+    .hotspot {
+      position: absolute;
+      height: 4.6%;
+      top: 64.6%;
+      border-radius: 999px;
+    }
+    .hotspot.loc { left: 6%; width: 40%; }
+    .hotspot.ok { left: 50%; width: 46%; }
+    audio { display: none; }
+  </style>
+</head>
+<body>
+  <main class="frame">
+    <img src="poster.png" alt="Posada Churrones 2026" />
+    <div class="count" aria-live="polite">
+      <div><b id="d">00</b></div>
+      <div><b id="h">00</b></div>
+      <div><b id="m">00</b></div>
+      <div><b id="s">00</b></div>
+    </div>
+    <a class="hotspot loc" target="_blank" rel="noopener" aria-label="Ubicación" href="https://maps.app.goo.gl/tQ787sFnSDhXbyth7"></a>
+    <a class="hotspot ok" id="confirm" target="_blank" rel="noopener" aria-label="Confirmar asistencia" href="https://wa.me/526622232862?text=Hola%2C%20confirmo%20mi%20asistencia%20a%20la%20Posada%20Churrones"></a>
+  </main>
+  <audio id="music" src="musica.mp3" loop preload="auto"></audio>
+  <script>
+    const target = new Date("2026-12-12T19:00:00-06:00").getTime();
+    const pad = (n) => String(n).padStart(2, "0");
+    function tick() {
+      const s = Math.max(0, Math.floor((target - Date.now()) / 1000));
+      document.getElementById("d").textContent = pad(Math.floor(s / 86400));
+      document.getElementById("h").textContent = pad(Math.floor((s % 86400) / 3600));
+      document.getElementById("m").textContent = pad(Math.floor((s % 3600) / 60));
+      document.getElementById("s").textContent = pad(s % 60);
+    }
+    tick();
+    setInterval(tick, 1000);
+    const music = document.getElementById("music");
+    music.volume = 0.75;
+    const start = () => music.play().catch(() => {});
+    start();
+    window.addEventListener("pointerdown", start, { once: true });
+  </script>
+</body>
+</html>
